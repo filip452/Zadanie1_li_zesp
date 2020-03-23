@@ -44,4 +44,11 @@ bool wyswietl(LZespolona Skl1);
 
 bool wczytaj(LZespolona &Skl1);
 
+
+
+
+std::istream & operator >> (std::istream & strm, LZespolona & Skl1);
+
+std::ostream & operator << (std::ostream & strm, LZespolona Skl1);
+
 #endif

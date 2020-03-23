@@ -7,19 +7,6 @@ using std::endl;
 
 int main()
 {
-  LZespolona x,y;
-  WyrazenieZesp z;
-
-  x=utworz(2,8);
-  y=utworz(-2,0);
-
-  z.Arg1=x;
-  z.Arg2=y;
-  z.Op=Op_Dziel;
-  
-  Wyswietl(z);
-  cout << endl;
-  wyswietl(Oblicz(z));
   
   return 0;
 }

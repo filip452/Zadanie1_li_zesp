@@ -136,3 +136,28 @@ std::istream & operator >> (std::istream & strm, LZespolona & Skl1)
   if (znak != ')')
     strm.setstate(std::ios::failbit);
 }
+
+
+
+
+std::istream & operator >> (std::istream & strm, LZespolona & Skl1)
+{
+  char znak;
+  strm>>znak;
+  if (znak != '(')
+    strm.setstate(std::ios::failbit);
+  strm>>Skl1.re>>Skl1.im>>znak;
+  if (znak != 'i')
+    strm.setstate(std::ios::failbit);
+  strm>>znak;
+  if (znak != ')')
+    strm.setstate(std::ios::failbit);
+  
+  return strm;
+}
+
+std::ostream & operator << (std::ostream & strm, LZespolona Skl1)
+{
+  strm << '(' << Skl1.re << std::showpos << Skl1.im << std::noshowpos << "i);";
+  return strm;
+}
