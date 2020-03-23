@@ -123,20 +123,6 @@ bool wczytaj(std::istream & strm, LZespolona &Skl1)
   return true;
 }
 
-std::istream & operator >> (std::istream & strm, LZespolona & Skl1)
-{
-  char znak;
-  strm>>znak;
-  if (znak != '(')
-    strm.setstate(std::ios::failbit);
-  strm>>Skl1.re>>Skl1.im>>znak;
-  if (znak != 'i')
-    strm.setstate(std::ios::failbit);
-  strm>>znak;
-  if (znak != ')')
-    strm.setstate(std::ios::failbit);
-}
-
 
 
 

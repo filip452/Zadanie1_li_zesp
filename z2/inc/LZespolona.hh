@@ -1,5 +1,6 @@
 #ifndef LZESPOLONA_HH
 #define LZESPOLONA_HH
+#include <iostream>
 
 /*!
  *  Plik zawiera definicje struktury LZesplona oraz zapowiedzi
