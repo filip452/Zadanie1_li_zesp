@@ -25,18 +25,20 @@ int ile_dobrych(Statystyki & st)
   return st.dobre;
 }
 
-int ile_wszystkich(Statystyki & st)
+int ile_wszystkich(const Statystyki & st)
 {
   return st.wszystkie;
 }
 
-int procent_dobrych(Statystyki & st)
+int procent_dobrych(const Statystyki & st)
 {
   return (st.dobre*100)/st.wszystkie;
 }
 
 std::ostream & operator << (std::ostream & strm, const Statystyki & st)
 {
-  strm << "Poprawne odpowiedzi: " << st.dobre << endl << "Niepoprawne odpowiedzi: " << st.wszystkie-st.dobre << endl << "wszystkie odpowiedzi: " << st.wszystkie;
+  strm << "Procent poprawnych odpowiedzi: " << procent_dobrych(st) << "%";
+  strm << endl;
+  strm << "wszystkie odpowiedzi: " << ile_wszystkich(st);
   return strm;
 }

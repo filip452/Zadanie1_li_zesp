@@ -1,0 +1,34 @@
+#include "Statystyka.hh"
+#include <iostream>
+
+void inicjuj(Statystyki st)
+{
+  st.dobre = 0;
+  st.wszystkie = 0;
+}
+
+void poprawna(Statystyki st)
+{
+  st.dobre++;
+  st.wszystkie++;
+}
+
+void niepoprawna(Statystyki st)
+{
+  st.wszystkie++;
+}
+
+int ile_dobrych(Statystyki st)
+{
+  return st.dobre;
+}
+
+int ile_wszystkich(Statystyki st)
+{
+  return st.wszystkie;
+}
+
+int procent_dobrych(Statystyki st)
+{
+  return st.dobre/st.wszystkie*100;
+}

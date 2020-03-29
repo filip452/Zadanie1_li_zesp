@@ -8,32 +8,6 @@ using std::cout;
  * w pliku naglowkowym.
  */
 
-void Wyswietl(WyrazenieZesp WyrZ)
-{
-  wyswietl(WyrZ.Arg1);
-
-  switch(WyrZ.Op)
-    {
-    case Op_Dodaj:
-      cout << '+';
-      break;
-      
-    case Op_Odejmij:
-      cout << '-';
-      break;
-
-    case Op_Mnoz:
-      cout << '*';
-      break;
-
-    case Op_Dziel:
-      cout << '/';
-      break;
-    }
-  
-  wyswietl(WyrZ.Arg2);
-}
-
 LZespolona Oblicz(WyrazenieZesp WyrZ)
 {
   LZespolona Wynik;

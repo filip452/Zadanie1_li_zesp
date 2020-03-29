@@ -60,7 +60,6 @@ LZespolona operator * (LZespolona Skl1, LZespolona Skl2)
 LZespolona operator / (LZespolona Skl, double Lr)
 {
   LZespolona Wynik;
-
   Wynik.re = Skl.re / Lr;
   Wynik.im = Skl.im / Lr;
   return Wynik;
@@ -70,8 +69,20 @@ LZespolona operator / (LZespolona Skl1, LZespolona Skl2)
 {
   LZespolona Wynik;
 
-  Wynik = Skl1 * sprzezenie(Skl2) / (pow(Skl2.re,2) + pow(Skl2.im,2));
+  if(Skl2 == utworz(0,0)) Wynik = utworz(0,0);
+    else Wynik = Skl1 * sprzezenie(Skl2) / (pow(Skl2.re,2) + pow(Skl2.im,2));
   return Wynik;
+}
+
+bool operator == (LZespolona Skl1, LZespolona Skl2)
+{
+  if(Skl1.re == Skl2.re && Skl1.im == Skl2.im) return true;
+  else return false;
+}
+
+bool operator != (LZespolona Skl1, LZespolona Skl2)
+{
+  return !(Skl1 == Skl2);
 }
 
 
@@ -84,43 +95,6 @@ LZespolona utworz(double re, double im)
   lz.im=im;
 
   return lz;
-}
-
-bool wyswietl(LZespolona Skl1)
-{
-  if(cout << '(' << Skl1.re << std::showpos << Skl1.im << std::noshowpos << ");")
-    return true;
-  return false;
-}
-
-bool wczytaj(LZespolona &Skl1)
-{
-  char znak;
-
-  cin >> znak;
-  if(znak!='(')
-    return false;
-  cin >> Skl1.re >> Skl1.im;
-  return true;
-}
-
-
-bool wczytaj(std::istream & strm, LZespolona &Skl1)
-{
-  char znak;
-
-  strm >> znak;
-  if(znak!='(')
-    return false;
-  cin >> Skl1.re >> Skl1.im;
-  strm >> znak;
-  if(znak!='i')
-    return false;
-  strm >> znak;
-  if(znak!=')')
-    return false;
-  
-  return true;
 }
 
 
@@ -144,6 +118,6 @@ std::istream & operator >> (std::istream & strm, LZespolona & Skl1)
 
 std::ostream & operator << (std::ostream & strm, LZespolona Skl1)
 {
-  strm << '(' << Skl1.re << std::showpos << Skl1.im << std::noshowpos << "i);";
+  strm << '{' << Skl1.re << std::showpos << Skl1.im << std::noshowpos << "i}";
   return strm;
 }
