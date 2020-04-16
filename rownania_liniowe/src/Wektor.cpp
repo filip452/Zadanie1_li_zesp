@@ -51,21 +51,19 @@ double & wektor::operator[] (int index)
 }
 
 
-const wektor & wektor::operator +(const wektor & W2) const
+wektor wektor::operator +(const wektor & W2) const
 {
   wektor w;
   for(int i=0;i<ROZMIAR;i++)
     w[i]=tab_w[i]+W2[i];
-  const wektor & wynik=w; 
-  return wynik;
+  return w;
 }
-const wektor & wektor::operator -(const wektor & W2) const
+wektor wektor::operator -(const wektor & W2) const
 {
   wektor w;
   for(int i=0;i<ROZMIAR;i++)
     w[i]=tab_w[i]-W2[i];
-  const wektor & wynik=w; 
-  return wynik;
+  return w;
 }
 double wektor::operator *(const wektor & W2) const
 {
@@ -75,13 +73,12 @@ double wektor::operator *(const wektor & W2) const
   const double & wynik=w; 
   return wynik;
 } 
-const wektor & wektor::operator *(double l2) const
+wektor wektor::operator *(double l2) const
 {
   wektor w;
   for(int i=0;i<ROZMIAR;i++)
-    w[i]=tab_w[i]*l2;
-  const wektor & wynik=w; 
-  return wynik;
+    w[i]=tab_w[i]*l2; 
+  return w;
 }
 
 
@@ -92,13 +89,15 @@ double wektor::dlugosc() const
 
 bool wektor::operator== (const wektor & W2) const
 {
-  if(tab_w[0]==W2[0] && tab_w[1]==W2[1] && tab_w[2]==W2[2]) return true;
-  else return false;
+  for(int i=0;i<ROZMIAR;i++)
+    if(abs(tab_w[i]-W2[i])>EPSILON) return false;
+  return true;
 }
 bool wektor::operator!= (const wektor & W2) const
 {
-  if(tab_w[0]==W2[0] && tab_w[1]==W2[1] && tab_w[2]==W2[2]) return false;
-  else return true;
+  for(int i=0;i<ROZMIAR;i++)
+    if(abs(tab_w[i]-W2[i])>EPSILON) return true;
+  return false;
 }
 
   

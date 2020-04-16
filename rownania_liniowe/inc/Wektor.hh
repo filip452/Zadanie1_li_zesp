@@ -25,10 +25,10 @@ class wektor {
   const double & operator[] (int index) const;
   double & operator[] (int index);
 
-  const wektor & operator +(const wektor & W2) const;
-  const wektor & operator -(const wektor & W2) const;
+  wektor operator +(const wektor & W2) const;
+  wektor operator -(const wektor & W2) const;
   double operator *(const wektor & W2) const;
-  const wektor & operator *(double l2) const;
+  wektor operator *(double l2) const;
 
   double dlugosc() const;
   bool operator== (const wektor & W2) const;

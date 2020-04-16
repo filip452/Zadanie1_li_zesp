@@ -32,14 +32,14 @@ class macierzkw{
   double & operator() (int ind1, int ind2);
 
   double wyznacznikLaplace();
-  double wyznacznikGauss(); //napisać
+  //double wyznacznikGauss(); //napisać
   double wyznacznikSarrus();
 
-  const wektor & operator *(const wektor & W);
-  const macierzkw & operator +(const macierzkw & B);
-  const macierzkw & operator -(const macierzkw & B);
-  const macierzkw & operator *(const macierzkw & B);
-  const macierzkw & operator *(double l2);
+  wektor operator *(const wektor & W);
+  macierzkw operator +(const macierzkw & B);
+  macierzkw operator -(const macierzkw & B);
+  macierzkw operator *(const macierzkw & B);
+  macierzkw operator *(double l2);
 
   bool operator== (const macierzkw & M2) const;
   bool operator!= (const macierzkw & M2) const;
@@ -49,9 +49,11 @@ class macierzkw{
 
   const macierzkw & odwroc() const;
   void odwroc();
+  const macierzkw & odwroc_sar() const;
+  void odwroc_sar();
 };
 
-const macierzkw & operator *(double l2, const macierzkw M);
+macierzkw operator *(double l2, const macierzkw M);
 /*
  * To przeciazenie trzeba opisac. Co ono robi. Jaki format
  * danych akceptuje. Jakie jest znaczenie parametrow itd.

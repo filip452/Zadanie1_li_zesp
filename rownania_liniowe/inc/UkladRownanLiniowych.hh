@@ -4,6 +4,7 @@
 #include "Wektor.hh"
 #include "Macierz.hh"
 #include <iostream>
+#include <cmath>
 
 
 /*
@@ -21,7 +22,8 @@ class UkladRownanL{
   /*
    *  Tutaj trzeba wstawic definicje odpowiednich metod publicznych
    */
-const wektor & rozwiaz() const;
+wektor rozwiaz() const;
+wektor rozwiaz_sar() const;
 UkladRownanL();
 UkladRownanL(const macierzkw & M, const wektor & W);
 const wektor & zwroc_wektor_wolny() const;
@@ -48,6 +50,5 @@ std::istream& operator >> (std::istream &strm, UkladRownanL &UklRown);
  *    ~bk/edu/kpo/zalecenia.txt 
  */
 std::ostream& operator << ( std::ostream &strm, const UkladRownanL &UklRown);
-
 
 #endif

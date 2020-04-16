@@ -12,9 +12,23 @@ using std::istream;
  *  Mniejsze metody mozna definiwac w ciele klasy.
  */
 
-const wektor & UkladRownanL::rozwiaz() const
+wektor UkladRownanL::rozwiaz() const
 {
-  return 0;
+  wektor wynik;
+  macierzkw M=A.odwroc();
+  M.transponuj();
+  wynik=M*b;
+  A.odwroc();
+  return wynik;
+}
+wektor UkladRownanL::rozwiaz_sar() const
+{
+  wektor wynik;
+  macierzkw M=A.odwroc_sar();
+  M.transponuj();
+  wynik=M*b;
+  A.odwroc_sar();
+  return wynik;
 }
 UkladRownanL::UkladRownanL()
 {
@@ -49,15 +63,26 @@ void UkladRownanL::zmien_macierz(const macierzkw & M)
 
 std::ostream& operator << ( std::ostream &strm, const UkladRownanL &UklRown)
 {
-  macierzkw M;
-  wektor w;
-
-  M=UklRown.zwroc_macierz();
-  w=UklRown.zwroc_wektor_wolny();
-
-  for(int i=0;i<ROZMIAR;i++)
-    strm<<M[i][0]<<'x'<<std::showpos<<M[i][1]<<'y'<<M[i][2]<<std::noshowpos<<"z="<<w[i]<<endl;
+  wektor blad,rozwiazanie,wolny=UklRown.zwroc_wektor_wolny();
+  macierzkw M=UklRown.zwroc_macierz();
+  double dlg_bledu;
+  M.transponuj();
+  rozwiazanie=UklRown.rozwiaz();
+  blad=M*rozwiazanie-wolny;
+  dlg_bledu=sqrt(pow(blad.dlugosc(),2));
   
+  strm<<"Transponowana macierz wartości:\n";
+  strm<<M<<endl;
+  strm<<"Wektor wyrazow wolnych:\n";
+  strm<<wolny<<endl;
+  strm<<"Rozwiązanie:\n";
+  strm<<rozwiazanie<<endl;
+  strm<<"Roziazanie metoda Sarrusa:\n";
+  strm<<UklRown.rozwiaz_sar()<<endl;
+
+  strm<<"Wektor bledu: "<<blad<<endl;
+  strm<<"Dlugosc wektora bledu: "<<dlg_bledu<<endl;
+
   return strm;
 }
 

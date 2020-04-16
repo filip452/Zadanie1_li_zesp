@@ -89,10 +89,10 @@ double macierzkw::wyznacznikLaplace()
   wyznacznik+=tab_m[0][2]*(tab_m[1][0]*tab_m[2][1]-tab_m[1][1]*tab_m[2][0]);
   return wyznacznik;
 }
-double macierzkw::wyznacznikGauss()
+/*double macierzkw::wyznacznikGauss()
 {
 
-}
+}*/
 double macierzkw::wyznacznikSarrus()
 {
   //00*11*22+01*12*20+02*10*21
@@ -108,35 +108,32 @@ double macierzkw::wyznacznikSarrus()
 }
 
 
-const wektor & macierzkw::operator *(const wektor & W)
+wektor macierzkw::operator *(const wektor & W)
 {
   wektor temp;
   for(int i=0;i<ROZMIAR;i++)
     for(int j=0;j<ROZMIAR;j++)
       temp[i]=temp[i]+tab_m[i][j]*W[j];
-  const wektor & wynik=temp;
-  return wynik;
+  return temp;
 }
 
-const macierzkw & macierzkw::operator +(const macierzkw & B)
+macierzkw macierzkw::operator +(const macierzkw & B)
 {
   macierzkw A;
   for(int i=0;i<ROZMIAR;i++)
     for(int j=0;j<ROZMIAR;j++)
       A[i][j]=tab_m[i][j]+B[i][j];
-  const macierzkw & wynik=A;
-  return wynik;
+  return A;
 }
-const macierzkw & macierzkw::operator -(const macierzkw & B)
+macierzkw macierzkw::operator -(const macierzkw & B)
 {
   macierzkw A;
   for(int i=0;i<ROZMIAR;i++)
     for(int j=0;j<ROZMIAR;j++)
       A[i][j]=tab_m[i][j]-B[i][j];
-  const macierzkw & wynik=A;
-  return wynik;
+  return A;
 }
-const macierzkw & macierzkw::operator *(const macierzkw & B)
+macierzkw macierzkw::operator *(const macierzkw & B)
 {
   macierzkw A;
 
@@ -149,31 +146,27 @@ const macierzkw & macierzkw::operator *(const macierzkw & B)
 	}
     }
   
-  const macierzkw & wynik=A;
-  return wynik;
+  return A;
 }
-const macierzkw & macierzkw::operator *(double l2)
+macierzkw macierzkw::operator *(double l2)
 {
   macierzkw A;
   for(int i=0;i<ROZMIAR;i++)
     for(int j=0;j<ROZMIAR;j++)
       A[i][j]=tab_m[i][j]*l2;
-  const macierzkw & wynik=A;
-  return wynik;
+  return A;
 }
 
 bool macierzkw::operator== (const macierzkw & M2) const
 {
   for(int i=0;i<ROZMIAR;i++)
-    for(int j=0;j<ROZMIAR;j++)
-      if(tab_m[i][j]!=M2[i][j]) return false;
+      if(tab_m[i]!=M2[i]) return false;
   return true;
 }
 bool macierzkw::operator!= (const macierzkw & M2) const
 {
   for(int i=0;i<ROZMIAR;i++)
-    for(int j=0;j<ROZMIAR;j++)
-      if(tab_m[i][j]!=M2[i][j]) return true;
+      if(tab_m[i]!=M2[i]) return true;
   return false;
 }
 
@@ -197,6 +190,7 @@ void macierzkw::transponuj()
       tab_m[i][j]=M[i][j];
 }
 
+//wyznacznik liczony metoda Laplacea
 const macierzkw & macierzkw::odwroc() const
 {
   macierzkw dopelnien,M;
@@ -211,7 +205,7 @@ const macierzkw & macierzkw::odwroc() const
   
   if(wyznacznik==0)
     {
-      cerr<<"nie mozna odwrocic";
+      cerr<<"nie mozna odwrocic\n";
       exit(1);
     }
   
@@ -253,7 +247,7 @@ void macierzkw::odwroc()
   
   if(wyznacznik==0)
     {
-      cerr<<"nie mozna odwrocic";
+      cerr<<"nie mozna odwrocic\n";
       exit(1);
     }
   
@@ -282,15 +276,99 @@ void macierzkw::odwroc()
       }
 }
 
+//Dla porownania wyznacznik liczony metoda Sarrusa
+const macierzkw & macierzkw::odwroc_sar() const
+{
+  macierzkw dopelnien,M;
+  double wyznacznik;
+  int w1,w2;
+  int k1,k2;
 
-const macierzkw & operator *(double l2, const macierzkw M)
+  for(int i=0;i<ROZMIAR;i++)
+    for(int j=0;j<ROZMIAR;j++)
+      M[i][j]=tab_m[i][j];
+  wyznacznik=M.wyznacznikSarrus();
+  
+  if(wyznacznik==0)
+    {
+      cerr<<"nie mozna odwrocic\n";
+      exit(1);
+    }
+  
+  for(int i=0;i<ROZMIAR;i++)
+    {
+      k1=i+1;
+      if(k1==3) k1=0;
+      k2=k1+1;
+      if(k2==3) k2=0;
+      
+      for(int j=0;j<ROZMIAR;j++)
+	{
+	  w1=j+1;
+	  if(w1==3) w1=0;
+	  w2=w1+1;
+	  if(w2==3) w2=0;
+	  
+	  dopelnien[i][j]=(tab_m[k1][w1]*tab_m[k2][w2]-tab_m[k1][w2]*tab_m[k2][w1]);
+	}
+    }
+  dopelnien.transponuj();
+  for(int i=0;i<ROZMIAR;i++)
+    for(int j=0;j<ROZMIAR;j++)
+      {
+	M[i][j]=dopelnien[i][j]*(1/wyznacznik);
+      }
+  
+  const macierzkw & wynik=M;
+  return wynik;
+}
+void macierzkw::odwroc_sar()
+{
+  macierzkw dopelnien;
+  double wyznacznik;
+  int w1,w2;
+  int k1,k2;
+
+  wyznacznik=wyznacznikSarrus();
+  
+  if(wyznacznik==0)
+    {
+      cerr<<"nie mozna odwrocic\n";
+      exit(1);
+    }
+  
+  for(int i=0;i<ROZMIAR;i++)
+    {
+      k1=i+1;
+      if(k1==3) k1=0;
+      k2=k1+1;
+      if(k2==3) k2=0;
+      
+      for(int j=0;j<ROZMIAR;j++)
+	{
+	  w1=j+1;
+	  if(w1==3) w1=0;
+	  w2=w1+1;
+	  if(w2==3) w2=0;
+	  
+	  dopelnien[i][j]=(tab_m[k1][w1]*tab_m[k2][w2]-tab_m[k1][w2]*tab_m[k2][w1]);
+	}
+    }
+  dopelnien.transponuj();
+  for(int i=0;i<ROZMIAR;i++)
+    for(int j=0;j<ROZMIAR;j++)
+      {
+	tab_m[i][j]=dopelnien[i][j]*(1/wyznacznik);
+      }
+}
+
+macierzkw operator *(double l2, const macierzkw M)
 {
   macierzkw A;
   for(int i=0;i<ROZMIAR;i++)
     for(int j=0;j<ROZMIAR;j++)
       A[i][j]=M[i][j]*l2;
-  const macierzkw & wynik=A;
-  return wynik;
+  return A;
 }
 
 ostream & operator<< (ostream & strm, const macierzkw & M)
