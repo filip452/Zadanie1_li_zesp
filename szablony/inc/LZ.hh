@@ -10,8 +10,8 @@ struct lz
   lz(double x,double y): re(x), im(y) {}
    explicit lz(double liczba): re(liczba), im(0) {}
   
-  void operator=(double liczba) {re=liczba; im=0;}
-  void operator+=(const lz & z2) {re=re+z2.re; im=im+z2.im;}
+  lz operator=(double liczba) {re=liczba; im=0;return *this;}
+  lz operator+=(const lz & z2) {re=re+z2.re; im=im+z2.im;return *this;}
 
   lz sprzezenie();
   double modul() {return sqrt(pow(re,2)+pow(im,2));}
