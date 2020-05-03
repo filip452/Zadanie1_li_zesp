@@ -51,14 +51,17 @@ bool lz::operator == (lz z2) const
 {
   if(abs(re-z2.re)<EPSILON && abs(im-z2.im)<EPSILON) return true;
   else return false;
-} 
+}
+bool lz::operator == (double z2) const
+{
+  if(abs(re-z2)<EPSILON && abs(im)<EPSILON) return true;
+  else return false;
+}
 bool lz::operator != (lz z2) const
 {
   if(abs(re-z2.re)>EPSILON || abs(im-z2.im)>EPSILON) return true;
   else return false;
 }
-
-
 lz operator / (lz z1,lz z2)
 {
   if(z2.re==0 && z2.im==0)
@@ -68,6 +71,18 @@ lz operator / (lz z1,lz z2)
     }
   lz wynik;
   wynik=z1*z2.sprzezenie()/(pow(z2.re,2)+pow(z2.im,2));
+  return wynik;
+}
+lz operator / (double z1,lz z2)
+{
+  if(z2.re==0 && z2.im==0)
+    {
+      std::cout<<"Nie mozna dzielic przez zero.\n";
+      exit(1);
+    }
+  lz wynik,temp;
+  temp.re=z1; temp.im=0;
+  wynik=temp*z2.sprzezenie()/(pow(z2.re,2)+pow(z2.im,2));
   return wynik;
 }
 

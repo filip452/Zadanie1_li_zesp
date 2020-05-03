@@ -108,21 +108,17 @@ std::istream & operator>>(std::istream & strm, wektor<TYP,ROZMIAR> & W)
   strm>>znak;
   if (znak != '(')
     strm.setstate(std::ios::failbit);
-  strm>>W[0]>>znak;
-  if (znak != ',')
-    strm.setstate(std::ios::failbit);
-  strm>>W[1]>>znak;
-  if (znak != ',')
-    strm.setstate(std::ios::failbit);
-  strm>>W[2]>>znak;
-  if (znak != ')')
-    strm.setstate(std::ios::failbit);
+  for(int i=0;i<ROZMIAR;i++)
+    strm>>W[i]>>znak;
   return strm;
 }
 
 template<class TYP, int ROZMIAR>
 std::ostream & operator<< (std::ostream & strm, const wektor<TYP,ROZMIAR> & W)
 {
-  strm << '(' << W[0] << ',' << W[1] << ',' << W[2] << ')';
+  strm<<'(';
+  for(int i=0;i<ROZMIAR;i++)
+    strm<<W[i]<<',';
+  strm<<')';
   return strm;
 }
